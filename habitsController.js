@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
 
 // update
 router.put('/:id', (req, res) => {
-  Habit.findOneAndUpdate({_id: req.params.id}, {$inc: {streak: 1}}, {new: true})
+  Habit.findOneAndUpdate({_id: req.params.id}, {streak: req.body.streak, complete: req.body.complete}, {new: true})
   .then(habit => {
     res.json(habit)
   })
