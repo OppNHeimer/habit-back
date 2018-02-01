@@ -19,7 +19,7 @@ router.post('/', (req, res) => {
   .catch(error => console.log(error))
 })
 
-// increment streak
+// update
 router.put('/:id', (req, res) => {
   Habit.findOneAndUpdate({_id: req.params.id}, {$inc: {streak: 1}}, {new: true})
   .then(habit => {

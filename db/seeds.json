@@ -3,12 +3,14 @@
     "name": "make bed",
     "hue": 299,
     "lightness": 50,
-    "streak": 99
+    "streak": 99,
+    "complete": false
   },
   {
     "name": "wake without snoozing",
     "hue": 122,
     "lightness": 90,
-    "streak": 0
+    "streak": 0,
+    "complete": false
   }
 ]
