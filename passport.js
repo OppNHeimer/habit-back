@@ -11,15 +11,16 @@ passport.use('local-login', new LocalStrategy(
     usernameField: 'email',
     passwordField: 'password'
   },
-  function (email, password, callback) {
-    return User.findOne({email: email})
-      .then(user => {
-        if (!user) {
-          return callback(null, false, {message: 'Incorrect email or password'})
-        }
-        return callback(null, user, {message: 'Logged in successfully'})
-      })
-      .catch(err => callback(err))
+  function (email, password, done) {
+    User.findOne({email: email}, (err, user) => {
+      if (!user) {
+        return done(null, false, { message: 'Incorrect email or password' })
+      }
+      if (err) {
+        return done(err)
+      }
+      return done(null, user, { message: 'Logged in successfully' })
+    })
   }
 ))
 
@@ -29,25 +30,24 @@ passport.use('local-signup', new LocalStrategy(
     passwordField: 'password'
   },
   function (email, password, done) {
-    User.findOne({email: email}, function (err, user) {
+    User.findOne({email: email}, (err, user) => {
       if (user) {
-        console.log('user exists')
         return done(null, false, { message: 'email address already in use' })
       }
       if (err) {
-        console.log('error')
-        return done(err)
+        return done(err, false, { message: 'something went' })
       }
       if (!user) {
-        console.log('no user found!')
-        return done(null, {
+        User.create({
           email: email,
-          password: password}, { message: 'email available' })
+          password: password
+        })
+          .then(user => {
+            return done(null, user, { message: 'user created' })
+          })
+          .catch(err => console.log(err))
       }
     })
-      // .then(user => {
-      //
-      // })
   }
 ))
 

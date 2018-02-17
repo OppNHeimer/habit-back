@@ -2,27 +2,16 @@ const express = require('express')
 const router = express.Router()
 const passport = require('./passport')
 const jwt = require('jsonwebtoken')
-const mongoose = require('./db/schema')
-const User = mongoose.model('User')
+// const mongoose = require('./db/schema')
+// const User = mongoose.model('User')
 
 router.post('/signup', (req, res, next) => {
-  console.log('ping')
   passport.authenticate('local-signup', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.status(400).json({
-        message: 'signup error',
-        user: user
-      })
+      return res.json(info)
     }
     if (user) {
-      console.log(user)
-      User.create({
-        email: user.email,
-        password: user.password
-      })
-      .then(user => { res.json(user) })
-      .catch(err => console.log(err))
-      // need to create new user
+      res.json(user)
     }
     // req.logIn(user, { session: false }, (err) => {
     //   if (err) {
@@ -38,17 +27,15 @@ router.post('/signup', (req, res, next) => {
 router.post('/login', (req, res) => {
   passport.authenticate('local-login', { session: false }, (err, user, info) => {
     if (err || !user) {
-      return res.status(400).json({
-        message: 'login error',
-        user: user
-      })
+      return res.json(info)
     }
     req.login(user, { session: false }, (err) => {
       if (err) {
         res.send(err)
       }
-      let token = jwt.sign(user, 'your_jwt_secret')
-      return res.json({ user, token })
+      console.log(user)
+      // let token = jwt.sign(user, 'your_jwt_secret')
+      return res.json({ token: jwt.sign(user.toJSON(), 'your_jwt_secret') })
     })
   })(req, res) // ??
 })
