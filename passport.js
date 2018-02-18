@@ -16,9 +16,7 @@ passport.use('local-login', new LocalStrategy(
       if (!user) {
         return done(null, false, { message: 'Incorrect email or password' })
       }
-      if (err) {
-        return done(err)
-      }
+      if (err) { return done(err) }
       return done(null, user, { message: 'Logged in successfully' })
     })
   }
@@ -41,23 +39,22 @@ passport.use('local-signup', new LocalStrategy(
         User.create({
           email: email,
           password: password
+        }, (err, user) => {
+          if (err) { done(err) }
+          return done(null, user, { message: 'user created' })
         })
-          .then(user => {
-            return done(null, user, { message: 'user created' })
-          })
-          .catch(err => console.log(err))
       }
     })
   }
 ))
 
-passport.use(new JWTStrategy(
+passport.use('jwt', new JWTStrategy(
   {
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
     secretOrKey: 'your_jwt_secret'
   },
   function (jwtPayload, callback) {
-    return User.findOneById(jwtPayload.id)
+    return User.findOne({ _id: jwtPayload._id })
       .then(user => {
         return callback(null, user)
       })
@@ -66,18 +63,5 @@ passport.use(new JWTStrategy(
       })
   }
 ))
-
-// const passportStrategy = (passport) => {
-//   passport.use('logIn', new LocalStrategy(
-//     function (username, password, done) {
-//       User.findOne({ 'local.username': username }, function (err, user) {
-//         if (err) { return done(err) }
-//         if (!user) { return done(null, false) }
-//         if (!user.verifyPassword(password)) { return done(null, false) }
-//         return done(null, user)
-//       })
-//     })
-//   )
-// }
 
 module.exports = passport
