@@ -2,6 +2,7 @@ const mongoose = require('./connection')
 // var bcrypt = require('bcrypt-nodejs')
 
 const habitSchema = new mongoose.Schema({
+  user_id: String,
   name: String,
   hue: Number,
   lightness: Number,
@@ -11,7 +12,8 @@ const habitSchema = new mongoose.Schema({
 
 const userSchema = new mongoose.Schema({
   email: String,
-  password: String
+  password: String,
+  activeHabits: Number
 })
 
 // userSchema.methods.encrypt = function (password) {

@@ -4,7 +4,8 @@ const mongoose = require('./db/schema')
 const Habit = mongoose.model('Habit')
 
 router.get('/', (req, res) => {
-  Habit.find({})
+  console.log(req.user)
+  Habit.find({user_id: req.user._id})
     .then(habits => res.json(habits))
     .catch(error => console.log(error))
 })
@@ -14,8 +15,9 @@ router.get('/', (req, res) => {
 //     .catch(error => console.log(error))
 // }
 router.post('/', (req, res) => {
-  Habit.create(req.body)
+  Habit.create(Object.assign({user_id: req.user._id}, req.body))
     .then(habit => {
+      console.log(habit)
       res.json(habit)
     })
     .catch(error => console.log(error))
