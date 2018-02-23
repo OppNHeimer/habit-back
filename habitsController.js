@@ -9,11 +9,7 @@ router.get('/', (req, res) => {
     .then(habits => res.json(habits))
     .catch(error => console.log(error))
 })
-// const getHabits = (req, res) => {
-//   Habit.find({})
-//     .then(habits => res.json(habits))
-//     .catch(error => console.log(error))
-// }
+
 router.post('/', (req, res) => {
   Habit.create(Object.assign({user_id: req.user._id}, req.body))
     .then(habit => {
@@ -22,13 +18,7 @@ router.post('/', (req, res) => {
     })
     .catch(error => console.log(error))
 })
-// const newHabit = (req, res) => {
-//   Habit.create(req.body)
-//     .then(habit => {
-//       res.json(habit)
-//     })
-//     .catch(error => console.log(error))
-// }
+
 router.put('/:id', (req, res) => {
   Habit.findOneAndUpdate({ _id: req.params.id }, { streak: req.body.streak, complete: req.body.complete }, { new: true })
     .then(habit => {
@@ -38,16 +28,3 @@ router.put('/:id', (req, res) => {
 })
 
 module.exports = router
-// const updateHabit = (req, res) => {
-//   Habit.findOneAndUpdate({ _id: req.params.id }, { streak: req.body.streak, complete: req.body.complete }, { new: true })
-//     .then(habit => {
-//       res.json(habit)
-//     })
-//     .catch(error => console.log(error))
-// }
-
-// module.exports = {
-//   getHabits,
-//   newHabit,
-//   updateHabit
-// }
