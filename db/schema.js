@@ -1,5 +1,5 @@
 const mongoose = require('./connection')
-// var bcrypt = require('bcrypt-nodejs')
+const bcrypt = require('bcrypt-nodejs')
 
 const habitSchema = new mongoose.Schema({
   user_id: String,
@@ -16,9 +16,17 @@ const userSchema = new mongoose.Schema({
   activeHabits: Number
 })
 
-// userSchema.methods.encrypt = function (password) {
-//   return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
-// }
+userSchema.methods.generateHash = password => {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null)
+}
+
+userSchema.methods.validPassword = (password, user) => {
+  if (user.password !== null) {
+    return bcrypt.compareSync(password, user.password)
+  } else {
+    return false
+  }
+}
 
 mongoose.model('Habit', habitSchema)
 mongoose.model('User', userSchema)

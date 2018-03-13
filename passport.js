@@ -14,10 +14,17 @@ passport.use('local-login', new LocalStrategy(
   function (email, password, done) {
     User.findOne({email: email}, (err, user) => {
       if (!user) {
-        return done(null, false, { message: 'Incorrect email or password' })
+        return done(null, false, { message: 'Incorrect username or password' })
       }
-      if (err) { return done(err) }
-      return done(null, user, { message: 'Logged in successfully' })
+      if (err) { 
+        return done(err, false, { message: err }) 
+      }
+      if (!user.validPassword(password, user)) {
+        return done(null, false, { message: 'Incorrect username or password.'})
+      }
+      if (user.validPassword(password, user)) {
+        return done(null, user, { message: 'Logged in successfully' })
+      }
     })
   }
 ))
@@ -36,13 +43,21 @@ passport.use('local-signup', new LocalStrategy(
         return done(err, false, { message: 'something went' })
       }
       if (!user) {
-        User.create({
-          email: email,
-          password: password
-        }, (err, user) => {
-          if (err) { done(err) }
-          return done(null, user, { message: 'user created' })
+        var newUser = new User()
+        newUser.email = email
+        newUser.password = newUser.generateHash(password)
+        newUser.save(err => {
+          if (err) { return done(err) }
+          return done(null, newUser, { message: 'user created' })
         })
+
+        // User.create({
+        //   email: email,
+        //   password: password
+        // }, (err, user) => {
+        //   if (err) { done(err) }
+        //   return done(null, user, { message: 'user created' })
+        // })
       }
     })
   }

@@ -13,8 +13,11 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
   Habit.create(Object.assign({user_id: req.user._id}, req.body))
     .then(habit => {
-      console.log(habit)
-      res.json(habit)
+      Habit.find({user_id: req.user._id})
+      .then(habits => res.json(habits))
+      .catch(error => console.log(error))      
+      // console.log(habit)
+      // res.json(habit)
     })
     .catch(error => console.log(error))
 })
