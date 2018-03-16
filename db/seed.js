@@ -5,9 +5,11 @@ const habitSeeds = require('./seeds.json')
 const userSeeds = require('./userSeeds.json')
 
 console.log('hello from seed.js')
+
+
 Habit.remove({})
   .then(() => {
-    Habit.create({
+    User.create({
       email: "email",
       password: "password",
       activeHabits: 0
