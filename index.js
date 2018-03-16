@@ -1,5 +1,5 @@
 const express = require('express')
-const cors = require('cors')()
+const cors = require('cors')
 const parser = require('body-parser')
 const passport = require('passport')
 const habitsController = require('./habitsController')
