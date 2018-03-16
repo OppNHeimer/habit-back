@@ -8,7 +8,7 @@ const usersController = require('./usersController')
 const app = express()
 
 app.use(parser.json())
-// app.use(cors())
+app.use(cors())
 app.options('*', cors())
 
 app.use('/auth', usersController)
