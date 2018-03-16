@@ -1,5 +1,6 @@
 [
   {
+    "user_id": "1",
     "name": "make bed",
     "hue": 299,
     "lightness": 50,
@@ -7,6 +8,7 @@
     "complete": false
   },
   {
+    "user_id": "1",
     "name": "wake without snoozing",
     "hue": 122,
     "lightness": 90,

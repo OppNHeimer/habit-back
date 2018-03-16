@@ -36,35 +36,36 @@ passport.use('local-signup', new LocalStrategy(
   },
   function (email, password, done) {
     console.log('strategy')
-    console.log(process.env.MLAB_URL)
-    // User.findOne({email: email}, (err, user) => {
-    //   if (user) {
-    //     return done(null, false, { message: 'email address already in use' })
-    //   }
-    //   if (err) {
-    //     return done(err, false, { message: 'something went' })
-    //   }
-    //   if (!user) {
-    //     cosole.log('no user found')
-    //     var newUser = new User()
-    //     newUser.email = email
-    //     newUser.password = newUser.generateHash(password)
-    //     newUser.save(err => {
-    //       if (err) { return done(err) }
-    //       console.log('user created')
-    //       return done(null, newUser, { message: 'user created' })
-    //     })
+    // console.log(process.env.MLAB_URL)
+    console.log(User)
+    User.findOne({email: email}, (err, user) => {
+      if (user) {
+        return done(null, false, { message: 'email address already in use' })
+      }
+      if (err) {
+        return done(err, false, { message: 'something went' })
+      }
+      if (!user) {
+        cosole.log('no user found')
+        var newUser = new User()
+        newUser.email = email
+        newUser.password = newUser.generateHash(password)
+        newUser.save(err => {
+          if (err) { return done(err) }
+          console.log('user created')
+          return done(null, newUser, { message: 'user created' })
+        })
 
-    //     // User.create({
-    //     //   email: email,
-    //     //   password: password
-    //     // }, (err, user) => {
-    //     //   if (err) { done(err) }
-    //     //   return done(null, user, { message: 'user created' })
-    //     // })
-    //   }
-    // })
-    return done(null, {username: 'joe', password: 'moe'}, { message: 'user created' })
+        // User.create({
+        //   email: email,
+        //   password: password
+        // }, (err, user) => {
+        //   if (err) { done(err) }
+        //   return done(null, user, { message: 'user created' })
+        // })
+      }
+    })
+    // return done(null, {username: 'joe', password: 'moe'}, { message: 'user created' })
 
   }
 ))
