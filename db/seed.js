@@ -4,6 +4,7 @@ const User = mongoose.model('User')
 const habitSeeds = require('./seeds.json')
 const userSeeds = require('./userSeeds.json')
 
+console.log('hello from seed.js')
 Habit.remove({})
   .then(() => {
     Habit.collection.insert(habitSeeds)
