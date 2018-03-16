@@ -4,6 +4,7 @@ const passport = require('./passport')
 const jwt = require('jsonwebtoken')
 
 router.post('/signup', (req, res, next) => {
+  console.log('signup')
   passport.authenticate('local-signup', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.json(info)
@@ -13,6 +14,8 @@ router.post('/signup', (req, res, next) => {
         if (err) {
           res.send(err)
         }
+        console.log('success')
+        console.log(res.header)
         return res.json({
           token: jwt.sign(user.toJSON(), 'your_jwt_secret'),
           user: user
