@@ -5,24 +5,25 @@ const jwt = require('jsonwebtoken')
 
 router.post('/signup', (req, res, next) => {
   console.log('signup')
-  passport.authenticate('local-signup', { session: false }, (err, user, info) => {
-    if (err || !user) {
-      return res.json(info)
-    }
-    if (user) {
-      req.login(user, { session: false }, (err) => {
-        if (err) {
-          res.send(err)
-        }
-        console.log('success')
-        console.log(res.header)
-        return res.json({
-          token: jwt.sign(user.toJSON(), 'your_jwt_secret'),
-          user: user
-        })
-      })
-    }
-  })(req, res, next)
+  // passport.authenticate('local-signup', { session: false }, (err, user, info) => {
+  //   if (err || !user) {
+  //     return res.json(info)
+  //   }
+  //   if (user) {
+  //     req.login(user, { session: false }, (err) => {
+  //       if (err) {
+  //         res.send(err)
+  //       }
+  //       console.log('success')
+  //       console.log(res.header)
+  //       return res.json({
+  //         token: jwt.sign(user.toJSON(), 'your_jwt_secret'),
+  //         user: user
+  //       })
+  //     })
+  //   }
+  // })(req, res, next)
+  res.send('hi')
 })
 
 router.post('/login', (req, res) => {
