@@ -23,6 +23,7 @@ router.post('/signup', (req, res, next) => {
   //     })
   //   }
   // })(req, res, next)
+  console.log(res.header)
   res.json({})
 })
 
