@@ -11,7 +11,7 @@ app.use(parser.json())
 app.use(cors())
 app.options('*', cors())
 
-app.use('/auth', usersController)
+app.use('/auth', cors(), usersController)
 app.use('/', passport.authenticate('jwt', { session: false }), habitsController)
 
 app.set('port', process.env.PORT || 3001)
