@@ -23,7 +23,7 @@ router.post('/signup', (req, res, next) => {
   //     })
   //   }
   // })(req, res, next)
-  res.send('hi')
+  res.json({})
 })
 
 router.post('/login', (req, res) => {
