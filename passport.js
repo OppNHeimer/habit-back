@@ -35,6 +35,7 @@ passport.use('local-signup', new LocalStrategy(
     passwordField: 'password'
   },
   function (email, password, done) {
+    console.log('strategy')
     User.findOne({email: email}, (err, user) => {
       if (user) {
         return done(null, false, { message: 'email address already in use' })
