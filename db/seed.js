@@ -6,13 +6,15 @@ const userSeeds = require('./userSeeds.json')
 
 console.log('hello from seed.js')
 
-
+let user = new User({
+  email: "email",
+  password: "password",
+  activeHabits: 0
+})
 Habit.remove({})
   .then(() => {
     User.create({
-      email: "email",
-      password: "password",
-      activeHabits: 0
+     
     })
     .then(res => {
       console.log(res)

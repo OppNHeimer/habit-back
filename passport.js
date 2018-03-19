@@ -35,9 +35,6 @@ passport.use('local-signup', new LocalStrategy(
     passwordField: 'password'
   },
   function (email, password, done) {
-    console.log('strategy')
-    // console.log(process.env.MLAB_URL)
-    console.log(User)
     User.findOne({email: email}, (err, user) => {
       if (user) {
         return done(null, false, { message: 'email address already in use' })
@@ -46,13 +43,12 @@ passport.use('local-signup', new LocalStrategy(
         return done(err, false, { message: 'something went' })
       }
       if (!user) {
-        cosole.log('no user found')
+        console.log('no user found')
         var newUser = new User()
         newUser.email = email
         newUser.password = newUser.generateHash(password)
         newUser.save(err => {
           if (err) { return done(err) }
-          console.log('user created')
           return done(null, newUser, { message: 'user created' })
         })
 
