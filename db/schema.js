@@ -13,7 +13,8 @@ const habitSchema = new mongoose.Schema({
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
-  activeHabits: Number
+  activeHabits: Number,
+  backgroundColor: String
 })
 
 userSchema.methods.generateHash = password => {

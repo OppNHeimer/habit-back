@@ -32,7 +32,7 @@ passport.use('local-login', new LocalStrategy(
 passport.use('local-signup', new LocalStrategy(
   {
     usernameField: 'email',
-    passwordField: 'password'
+    passwordField: 'password',
   },
   function (email, password, done) {
     User.findOne({email: email}, (err, user) => {
@@ -47,6 +47,7 @@ passport.use('local-signup', new LocalStrategy(
         var newUser = new User()
         newUser.email = email
         newUser.password = newUser.generateHash(password)
+        newUser.backgroundColor = 'hsl(60, 100%, 98%)'
         newUser.save(err => {
           if (err) { return done(err) }
           return done(null, newUser, { message: 'user created' })

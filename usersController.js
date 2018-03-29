@@ -4,7 +4,6 @@ const passport = require('./passport')
 const jwt = require('jsonwebtoken')
 
 router.post('/signup', (req, res, next) => {
-  console.log('signup')
   passport.authenticate('local-signup', { session: false }, (err, user, info) => {
     if (err || !user) {
       return res.json(info)
@@ -22,8 +21,6 @@ router.post('/signup', (req, res, next) => {
       })
     }
   })(req, res, next)
-  // console.log(res.header)
-  // res.json({})
 })
 
 router.post('/login', (req, res) => {
@@ -42,5 +39,7 @@ router.post('/login', (req, res) => {
     })
   })(req, res)
 })
+
+
 
 module.exports = router
